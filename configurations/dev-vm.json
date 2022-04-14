@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "West Europe"
+        },
+        "prefix": {
+            "value": "whs"
+        },
+        "vmSize": {
+            "value": "Standard_B2ms"
+        },
+        "subnetId": {
+            "value": "/subscriptions/dff3ece6-a69a-44f0-a666-ccc85f9ca528/resourceGroups/PKI-Lab/providers/Microsoft.Network/virtualNetworks/whs-vnet/subnets/default"
+        }
+    }
+}
