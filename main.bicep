@@ -20,6 +20,12 @@ param vnetSettings object = {
     {
       name: 'subnet1'
       addressPrefix: '10.10.10.0/24'
+      nsgDeploy: true
+    }
+    {
+      name: 'AzureBastionSubnet'
+      addressPrefix: '10.10.11.0/24'
+      nsgDeploy: false
     }
   ]
 }
@@ -35,6 +41,19 @@ module network 'infrastructure/network.bicep' = {
     prefix: prefix
     vnetSettings: vnetSettings
   }
+}
+
+// Deploy Azure Bastion
+module bastion 'infrastructure/bastion.bicep' = {
+  name: 'deploy-bastion'
+  params: {
+    location: location
+    prefix: prefix
+    subnetId: '${network.outputs.vNetId}/subnets/AzureBastionSubnet'
+  }
+  dependsOn: [
+    network
+  ]
 }
 
 // Deploy domaincontroller

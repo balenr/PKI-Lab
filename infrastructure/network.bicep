@@ -8,6 +8,7 @@ param vnetSettings object = {
     {
       name: 'default'
       addressPrefix: '10.10.10.0/24'
+      nsgDeploy: true
     }
   ]
 }
@@ -31,9 +32,9 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
       name: subnet.name
       properties: {
         addressPrefix: subnet.addressPrefix
-        networkSecurityGroup: {
+        networkSecurityGroup: subnet.nsgDeploy ? {
           id: networkSecurityGroup.id
-        }
+        } : null
       }
     }]
   }
