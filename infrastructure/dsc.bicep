@@ -1,5 +1,5 @@
 param location string = 'West Europe'
-param artifactLocation string = 'https://github.com/balenr/PKI-Lab/blob/main/DSC/TestConfig.zip'
+param artifactLocation string = 'https://github.com/balenr/PKI-Lab/raw/main/DSC/TestConfig.zip'
 
 resource virtualMachine 'Microsoft.Compute/virtualMachines@2020-12-01' existing = {
   name: 'whspki01'
@@ -16,7 +16,7 @@ resource windowsVMDsc 'Microsoft.Compute/virtualMachines/extensions@2020-12-01' 
     autoUpgradeMinorVersion: true
     settings: {
       modulesUrl: artifactLocation
-      configurationFunction: 'TestConfig'
+      configurationFunction: 'TestConfig.ps1\\TestConfig'
     }
   }
 }
