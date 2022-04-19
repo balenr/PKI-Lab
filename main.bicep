@@ -12,6 +12,7 @@ WHS PKI Lab TODO:
 
 param location string
 param prefix string
+param deployBastion bool = false
 param vnetSettings object = {
   addressPrefixes: [
     '10.10.0.0/16'
@@ -44,7 +45,7 @@ module network 'infrastructure/network.bicep' = {
 }
 
 // Deploy Azure Bastion
-module bastion 'infrastructure/bastion.bicep' = {
+module bastion 'infrastructure/bastion.bicep' = if (deployBastion) {
   name: 'deploy-bastion'
   params: {
     location: location
