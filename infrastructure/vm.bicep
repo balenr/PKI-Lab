@@ -3,6 +3,7 @@ param prefix string
 param subnetId string
 param vmSize string
 param adminUsername string = '${prefix}admin'
+param addDataDisk bool = false
 
 @secure()
 param adminPassword string
@@ -52,6 +53,15 @@ resource vm 'Microsoft.Compute/virtualMachines@2020-12-01' = {
         caching: 'ReadWrite'
         createOption: 'FromImage'
       }
+      dataDisks: addDataDisk ? [
+        {
+          name: '${vmName}_Data'
+          createOption: 'Empty'
+          lun: 0
+          diskSizeGB: 16
+          caching: 'None'
+        }
+      ] : json('null')
     }
     networkProfile: {
       networkInterfaces: [

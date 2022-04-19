@@ -66,6 +66,7 @@ module domainController 'infrastructure/vm.bicep' = {
     subnetId: '${network.outputs.vNetId}/subnets/${vnetSettings.subnets[0].name}'
     vmSize: 'Standard_B2ms'
     adminPassword: vmAdminPassword
+    addDataDisk: true
   }
   dependsOn: [
     network
