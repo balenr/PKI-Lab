@@ -1,5 +1,5 @@
 param location string = 'West Europe'
-param artifactLocation string = 'https://github.com/balenr/PKI-Lab/raw/main/DSC/TestConfig.zip'
+param artifactLocation string = 'https://github.com/balenr/PKI-Lab/raw/main/DSC/TestConfig.ps1.zip'
 
 resource virtualMachine 'Microsoft.Compute/virtualMachines@2020-12-01' existing = {
   name: 'whspki01'
