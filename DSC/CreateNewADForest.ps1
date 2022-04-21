@@ -12,18 +12,11 @@ Configuration CreateNewADForest {
         [Parameter(Mandatory)]
         [System.Management.Automation.PSCredential]$AdminCreds,
 
-        [Parameter(Mandatory)]
-        [System.Management.Automation.PSCredential]$SafeModeAdminCreds,
-
-        [Parameter(Mandatory)]
-        [System.Management.Automation.PSCredential]$myFirstUserCreds,
-
         [Int]$RetryCount = 20,
         [Int]$RetryIntervalSec = 30
     )
 
-    Import-DscResource -ModuleName xActiveDirectory, xNetworking, xPendingReboot
-    [System.Management.Automation.PSCredential ]$DomainCreds = New-Object System.Management.Automation.PSCredential ("${DomainName}\$($Admincreds.UserName)", $Admincreds.Password)
+    Import-DscResource -ModuleName 'PSDesirecStateConfiguration', 'xActiveDirectory', 'xNetworking', 'xPendingReboot', 'xStorage'
 
     Node localhost
     {
@@ -51,13 +44,28 @@ Configuration CreateNewADForest {
         WindowsFeature RSAT
         {
             Ensure = "Present"
-            Name = "RSAT"
+            Name = "RSAT-AD-PowerShell"
+        }
+
+        xWaitForDisk Disk2
+        {
+            DiskNumber = 2
+            RetryIntervalSec = $RetryIntervalSec
+            RetryCount = $RetryCount
+        }
+
+        xDisk ADDataDisk
+        {
+            DiskNumber = 2
+            DriveLetter = "F"
+            DependsOn = "[xWaitForDisk]Disk2"
         }
 
         WindowsFeature ADDSInstall
         {
             Ensure = "Present"
             Name = "AD-Domain-Services"
+            DependsOn = "[WindowsFeature]DNS"
         }
 
         xADDomain FirstDC
@@ -78,16 +86,6 @@ Configuration CreateNewADForest {
             RetryCount = $RetryCount
             RetryIntervalSec = $RetryIntervalSec
             DependsOn = "[xADDomain]FirstDC"
-        }
-
-        xADUser FirstUser
-        {
-            DomainName = $DomainName
-            DomainAdministratorCredential = $DomainCreds
-            UserName = $myFirstUserCreds.Username
-            Password = $myFirstUserCreds
-            Ensure = "Present"
-            DependsOn = "[xWaitForADDomain]DscForestWait"
         }
 
         xPendingReboot Reboot1
