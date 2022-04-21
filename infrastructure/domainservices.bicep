@@ -1,8 +1,9 @@
 param location string = 'West Europe'
 param artifactLocation string = 'https://github.com/balenr/PKI-Lab/raw/main/DSC/TestConfig.ps1.zip'
+param vmName string
 
 resource virtualMachine 'Microsoft.Compute/virtualMachines@2020-12-01' existing = {
-  name: 'whspki01'
+  name: vmName
 }
 
 resource windowsVMDsc 'Microsoft.Compute/virtualMachines/extensions@2020-12-01' = {

@@ -95,3 +95,4 @@ resource vm 'Microsoft.Compute/virtualMachines@2020-12-01' = {
 }
 
 output privateIpAddress string = nic.properties.ipConfigurations[0].properties.privateIPAddress
+output virtualMachineName string = vm.name

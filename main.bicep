@@ -72,3 +72,11 @@ module domainController 'infrastructure/vm.bicep' = {
     network
   ]
 }
+
+module domainServicesDsc 'infrastructure/domainservices.bicep' = {
+  name: 'ADDomainServicesDsc'
+  params: {
+    location: location
+    vmName: domainController.outputs.virtualMachineName
+  }
+}
