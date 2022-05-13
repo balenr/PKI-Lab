@@ -1,13 +1,11 @@
 /*
-WHS PKI Lab TODO:
-  - Create resource group
-  - Define virtual network(s)
-  - Build PKI virtual machines
-    - WHSPKI01: AD DC
-    - WHSPKI02: CRL Web Enrollment
-    - WHSPKI03: Standalone Root CA
-    - WHSPKI04: Enterprise Subordinate CA
-    - WHSPKI05: Windows 11 Client
+  WHS PKI Lab Environment
+
+  TODO Add WHSPKI02 - Standalone Root CA
+  TODO Add WHSPKI03 - Enterprise Subordinate CA
+  TODO Add WHSPKI04 - CRL Web Enrollment
+  TODO Add WHSPKI05 - Windows 11 Client
+
 */
 
 param location string
