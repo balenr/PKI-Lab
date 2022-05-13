@@ -78,5 +78,11 @@ module domainServicesDsc 'infrastructure/domainservices.bicep' = {
   params: {
     location: location
     vmName: domainController.outputs.virtualMachineName
+    domainName: 'whsec.lab'
+    adminUsername: '${prefix}admin'
+    adminPassword: vmAdminPassword
   }
+  dependsOn: [
+    domainController
+  ]
 }
